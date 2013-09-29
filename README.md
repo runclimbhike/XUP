@@ -1,0 +1,4 @@
+XUP
+===
+
+encfs stash controller

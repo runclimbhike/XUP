@@ -2,8 +2,8 @@
 # Name: XUP
 # Author: runclimbhike
 # Date: 9/11/13
-# Program Description: This program controls access to an encrypted file using EncFS for encryption and gedit for data management.
-# Details: This program assumes that the EncFS file has been created already. It also assumes that Gedit has been configured to save every minute.# 
+# Program Description: This program controls access to an encrypted file using EncFS for encryption.
+# Details: This program assumes that the EncFS file has been created already. 
 #
 #
 #begin splash and program information.
@@ -19,16 +19,7 @@ echo '
 '
 echo 'Initializing'
 sleep 1
-echo '.'
-sleep 1
-echo 'Created by runclimbhike'
-sleep 1
-echo 'XUP is a registered trademark of NIXNOW'
-sleep 1
-echo 'Fully licensed under General Public License 3. *** Use in-kind. *** Copyleft only *** You cant hate it if you made it'
-sleep 1
-echo '
-XUP is establishing connection.'
+echo 'Fully licensed under General Public License 3. *** Copyleft only *** You cant hate it if you made it***'
 sleep 1
 echo 'Please enter your credentials.'
 sleep 1
@@ -39,7 +30,6 @@ encfs ~/.encrypted ~/.decrypted
 if [ -a ~/.decrypted/data ];
 then
 	echo 'Verifying...'
-	echo '.'
 else 
 	echo 'Your credentials could not be verified. XUP will now close.'
 	sleep 4
@@ -48,24 +38,22 @@ else
 	exit 0
 fi
 sleep 1
-echo '.'
-sleep 1
 echo 'Your credentials have been verified successfully.'
 sleep 1
 echo 'XUP will now open a 5 minute session after which the file will re-encrypt.'
 sleep 1
-#spawn another terminal that opens the file in gedit
+#spawn another terminal that opens the file in EDITOR
 
-kate ~/.decrypted/data & 
+kwrite ~/.decrypted/data & 
 
-# Allow 2 minutes of access. gedit is set to save every minute.
+# Allow 6 minutes of access. gedit is set to save every minute.
 # Set gedit to save every minute.
 
-sleep 420
+sleep 360
 
 #close the spawned gedit process after the 2 minute save has completed.
 
-pkill kate
+pkill kwrite
 
 #encrypt the folder again
 

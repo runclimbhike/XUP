@@ -21,7 +21,7 @@ echo 'Initializing'
 sleep 1
 echo 'Fully licensed under General Public License 3 *** Copyleft only *** You cant hate it if you made it***'
 
-
+selection=
 until [ "$selection" = "0"]; do
      echo ""
      echo "XUP PROGRAM MENU"

@@ -3,8 +3,10 @@
 # Author: runclimbhike
 # Date: 9/11/13
 # Program Description: This is a control program for access to an encrypted file using EncFS for encryption.
-# Details: 
-# Dependencies: EncFS, fuse and an editor
+# Security Details: Make sure that your text editor is not creating unencrypted cache files. 
+# 	Kwrite and other simple text editors do not do that. Most complex code editors like Kate create cached files 
+#	for backup and recovery. This may store your secure file in plain text.
+# Dependencies: EncFS, fuse and a text editor
 #
 #begin splash and program information.
 echo '
@@ -17,27 +19,35 @@ echo '
         X   X *    *
        X     8 ~~~~~
 '
+echo '***Licensed under General Public License 3 *** Copyleft only ***'
+sleep 3
 echo 'Initializing'
 sleep 1
-echo 'Fully licensed under General Public License 3 *** Copyleft only ***'
-
+echo '.'
+sleep 1
+echo '.'
+sleep 1
+echo '.'
+echo ''
 selection=
-until [ "$selection" = "0"]; do
+until [ "$selection" = "0" ]; do
      echo ""
      echo "XUP PROGRAM MENU"
-     echo "1 - Create encFS stash"
-     echo "2 - Remove encFS stash"
-     echo "3 - Open stash for 6 minutes"
-     echo "4 - Open stash indefinitely"
-     echo "0 - Exit program"
+     echo "1 - Create encrypted file - first time setup"
+     echo "2 - Delete encrypted file - removes all data"
+     echo "3 - Open encrypted file for 5 minutes - allows temporary access then automatically re-encrypts"
+     echo "4 - Open encrypted file indefinitely - allows access for unspecified time period"
+     echo "0 - Exit XUP - closes program and verifies data re-encryption"
      echo ""
      echo -n "Enter Selection:"
      read selection
      echo ""
      case $selection in
-# Begin creation of encfs stash
+# Begin creation of encfs stash. This should be a one time process.
          1 ) 
 # check if encfs and fusermount is installed
+			echo 'XUP has been verified to work on the following linux distributions:
+			      openSUSE'
 			echo "Checking if software dependencies are installed"
 			sleep 1
 			 command -v encfs >/dev/null 2>&1 || { echo >&2 "XUP requires fuse but it's not installed.  Aborting."; exit 1; }
@@ -50,8 +60,8 @@ until [ "$selection" = "0"]; do
 				elif [ -a /usr/bin/gedit ];
 				then echo "Software dependencies have been satisfied. Beginning install."
 					 EDITOR=gedit
-				else echo "Please install either kwrite or gedit."
-					exit 0
+				else echo "Please install either kwrite or gedit.Aborting."
+				exit 0
 				
 			fi
 			
@@ -66,7 +76,7 @@ until [ "$selection" = "0"]; do
 		 2 ) 
 			rm -rf ~/.decrypted
 			rm -rf ~/.encrypted
-			echo Your encrypted stash has been deleted.
+			echo 'Your encrypted stash has been deleted. All data has been removed.'
 			;;
 # Open stash for 6 minutes.
 
@@ -98,20 +108,19 @@ until [ "$selection" = "0"]; do
 			sleep 1
 			#spawn another terminal that opens the file in gedit
 
-			EDITOR ~/.decrypted/data & 
+			$EDITOR ~/.decrypted/data & 
 
-			# Allow 2 minutes of access. gedit is set to save every minute.
-			# Set EDITOR to save every minute.
+			# Allow 5 minute window access
 
-			sleep 420
+			sleep 3
 
 			#close the spawned gedit process after the 2 minute save has completed.
 
-			pkill EDITOR
+			pkill $EDITOR
 
 			#encrypt the folder again
 
-			fusermount -u ~/.decrypted
+			fusermount -uq ~/.decrypted
 			#verify that the data is no long decrypted
 			if [ -a ~/.decrypted/data ];
 				then 
@@ -127,6 +136,7 @@ until [ "$selection" = "0"]; do
 			*****************************************************'
 			sleep 5
 			clear
+			exit 0
 			fi;;
 
 # Open stash indefinitely
@@ -161,13 +171,18 @@ until [ "$selection" = "0"]; do
 		EDITOR ~/.decrypted/data & 
 
              
-# Close the parent shell and leave the EDITOR open indefinitly.
+# Close the parent shell and leave the EDITOR open indefinitely.
 
 		exit;;
 		
 		
 		
-         0 ) exit;;
+         0 ) 
+         
+         fusermount -uq ~/.decrypted
+			#verify that the data is no long decrypted
+         
+         exit;;
          
          * ) echo "Please enter 1,2,3,4 or 0"
          

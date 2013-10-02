@@ -6,6 +6,7 @@ It decrypts the file and pops it open in kwrite or gedit for a specified period 
 
 
   XUP PROGRAM MENU
+  
      1 - Create encrypted file - first time setup
      2 - Delete encrypted file - removes all data
      3 - Open encrypted file for 5 minutes - allows temporary access then automatically re-encrypts

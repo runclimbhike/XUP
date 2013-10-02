@@ -46,8 +46,6 @@ until [ "$selection" = "0" ]; do
 # Begin creation of encfs stash. This should be a one time process.
          1 ) 
 # check if encfs and fusermount is installed
-			echo 'XUP has been verified to work on the following linux distributions:
-			      openSUSE'
 			echo "Checking if software dependencies are installed"
 			sleep 1
 			 command -v encfs >/dev/null 2>&1 || { echo >&2 "XUP requires fuse but it's not installed.  Aborting."; exit 1; }

@@ -1,7 +1,7 @@
 XUP
 ===
 
-This bash script/program creates and manages an encrypted file stored in a local encFS stash. 
+This bash script/program creates and manages an encrypted file (AES 256) stored in a local encFS stash. 
 It decrypts the file and pops it open in kwrite or gedit for a specified period of time then it re-encrypts the file.
 
 

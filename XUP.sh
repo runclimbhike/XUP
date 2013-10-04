@@ -4,7 +4,7 @@
 # Date: 9/11/13
 # Program Description: This is a control program for access to an encrypted file using EncFS for encryption.
 # Security Details: Make sure that your text editor is not creating unencrypted cache files. 
-# 	Kwrite and other simple text editors do not do that. Most complex code editors like Kate create cached files 
+# 	Kwrite and other simple text editors do not do that. Most complex code editors like Kate create #cached files 
 #	for backup and recovery. This may store your secure file in plain text.
 # Dependencies: EncFS, fuse and a text editor
 #
@@ -73,21 +73,22 @@ until [ "$selection" = "0" ]; do
 # Remove stash
 
 		 2 ) 
-			echo 'Are you sure you want to delete your encrypted file?  (Y or N)'
+			echo 'Are you sure you want to delete your encrypted file?  Type Y or N'
 			read DELETE
-			if [ $DELETE == 'Y' ]
-			then 
-			rm -rf ~/.decrypted
-			rm -rf ~/.encrypted
-			echo 'Your encrypted stash has been deleted. All data has been removed.'
-			elif 
-			echo 'Exiting program.'
-			exit 0
+			if [ $DELETE -eq 'Y' ]
+				then 
+				rm -rf ~/.decrypted
+				rm -rf ~/.encrypted
+				echo 'Your encrypted stash has been deleted. All data has been removed.'
+			elif [ $DELETE -ne 'Y' ]
+				then 
+				echo 'Exiting program.Re-open get to Program Menu.'
+				exit 0
 			fi
 			
 			
 			;;
-# Open stash for 6 minutes.
+# Open stash for 5 minutes.
 
 		 3 ) 
          
@@ -121,7 +122,7 @@ until [ "$selection" = "0" ]; do
 
 			# Allow 5 minute window access
 
-			sleep 3
+			sleep 300
 
 			#close the spawned gedit process after the 2 minute save has completed.
 
@@ -198,24 +199,4 @@ until [ "$selection" = "0" ]; do
      esac
      
 done
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

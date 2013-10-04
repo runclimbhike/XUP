@@ -48,8 +48,8 @@ until [ "$selection" = "0" ]; do
 # check if encfs and fusermount is installed
 			echo "Checking if software dependencies are installed"
 			sleep 1
-			 command -v encfs >/dev/null 2>&1 || { echo >&2 "XUP requires fuse but it's not installed.  Aborting."; exit 1; }
-			 command -v fusermount >/dev/null 2>&1 || { echo >&2 "XUP requires encfs but it's not installed.  Aborting."; exit 1; }
+			 command -v encfs >/dev/null 2>&1 || { echo >&2 "XUP requires EncFS but it's not installed.  Aborting."; exit 1; }
+			 command -v fusermount >/dev/null 2>&1 || { echo >&2 "XUP requires fusermount but it's not installed.  Aborting."; exit 1; }
 # Setup a basic text editor to open the encrypted file
 			
 			if [ -a /usr/bin/kwrite ];
@@ -65,16 +65,27 @@ until [ "$selection" = "0" ]; do
 			
 					 
 # create password, choose initial settings and initiate mount points.
-			echo "Software dependencies have been satisfied. Beginning install."
-					encfs ~/.encrypted ~/.decrypted
+			mkdir ~/.encrypted
+			mkdir ~/.decrypted
+			encfs ~/.encrypted ~/.decrypted
 				
 		;;
 # Remove stash
 
 		 2 ) 
+			echo 'Are you sure you want to delete your encrypted file?  (Y or N)'
+			read DELETE
+			if [ $DELETE == 'Y' ]
+			then 
 			rm -rf ~/.decrypted
 			rm -rf ~/.encrypted
 			echo 'Your encrypted stash has been deleted. All data has been removed.'
+			elif 
+			echo 'Exiting program.'
+			exit 0
+			fi
+			
+			
 			;;
 # Open stash for 6 minutes.
 

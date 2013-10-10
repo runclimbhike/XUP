@@ -67,6 +67,8 @@ until [ "$selection" = "0" ]; do
 # create password, choose initial settings and initiate mount points.
 			mkdir ~/.encrypted
 			mkdir ~/.decrypted
+			touch ~/.decrypted/data
+			chmod 700 ~/.decrypted/data
 			encfs ~/.encrypted ~/.decrypted
 				
 		;;
